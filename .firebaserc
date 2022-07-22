@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "farmrecords-bac2b",
+    "farmbook": "farmrecords-bac2b",
+    "clockin": "clockin-system-88031",
+    "farmrecords": "farmrecords-bac2b"
+  },
+  "targets": {
+    "clockin-system-88031": {
+      "hosting": {
+        "app": [
+          "clockin-system-88031"
+        ]
+      }
+    }
+  }
+}

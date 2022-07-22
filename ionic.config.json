@@ -1,0 +1,7 @@
+{
+  "name": "clockin",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

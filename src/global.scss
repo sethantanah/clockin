@@ -1,0 +1,54 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@100&family=Roboto:wght@300;400;500&display=swap');
+body, html, ion-content, .main-container{
+       font-family: 'Fira Sans', sans-serif;
+font-family: 'Roboto', sans-serif;
+height: 100%;
+overflow: scroll;
+}
+  ion-input{
+         background: transparent !important;
+         --background: transparent !important;
+        }
+
+
+
+        .alert-title{
+              color: #211f20 !important;
+        }
+      .alert-button{
+       color: #037b2f !important; 
+      }
+
+      #ion-popover{
+       --offset-y: -100px
+      }

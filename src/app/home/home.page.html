@@ -1,0 +1,262 @@
+<ion-content>
+
+  <div class="main-container">
+    <ion-slides pager="true" #slides pager="false" [options]="sliderOptions" (ionSlideDidChange)="slideChanged(slides)"
+      id="slides" (ionSlidesDidLoad)="slideChanged(slides)">
+
+
+      <ion-slide *ngIf="loggedIn === false">
+        <div class="main-content">
+
+          <div class="logo">
+            <img src="../../assets/U-Hub logo -size L.svg" alt="">
+          </div>
+
+          <div class="welcome-info">
+            <h1>Welcome</h1>
+            <h5>to convenient clock system</h5>
+          </div>
+
+
+          <div class="continue-as">
+            <div class="line"></div>
+            <div class="text">continue as</div>
+            <div class="line"></div>
+          </div>
+
+          <div class="buttons">
+            <div class="button" (click)="toLoginSlide('Guest'); formPage=true">
+            
+              <ion-text>Guest</ion-text>
+            </div>
+            <div class="button" (click)="toLoginSlide('Staff'); formPage=true">
+             
+              <ion-text>Staff</ion-text>
+            </div>
+          </div>
+        </div>
+        <div class="buttons">
+          
+        </div>
+
+
+
+       
+      </ion-slide>
+
+
+      <ion-slide id="slide-2">
+        <div class="main-content-2" *ngIf="formPage">
+          <div class="header" color="primary">
+            <span (click)="toHomeSlide()">
+              <ion-icon name="arrow-back" slot="start"></ion-icon>
+            </span>
+            <ion-text>{{persona}}</ion-text>
+            <h3>Please complete this form</h3>
+          </div>
+
+          <form class="form" [formGroup]="userForm">
+            <ion-item lines="none" color="primary" (click)="activateOptions=false; activatestatus=false">
+              <ion-label position="floating">Name</ion-label>
+              <ion-input type="text" formControlName="name"></ion-input>
+            </ion-item>
+
+
+
+
+            <ion-item lines="none" color="primary" (click)="activateOptions=false; activatestatus=false">
+              <ion-label position="floating">Mobile number </ion-label>
+              <ion-input type="number" formControlName="phone"></ion-input>
+            </ion-item>
+
+
+
+            <ion-item lines="none" color="primary" *ngIf="persona === 'Staff'"
+              (click)="activateOptions=false; activatestatus=false">
+              <ion-label position="floating">Email</ion-label>
+              <ion-input formControlName="email" type="email"></ion-input>
+            </ion-item>
+
+            <ion-item lines="none" color="primary" (click)="activateOptions=false; activatestatus=true">
+              <ion-label position="floating">{{persona === 'Staff' ? "Function" : "Status"}}</ion-label>
+              <ion-textarea type="text" formControlName="status"></ion-textarea>
+              <div class="purpose" *ngIf="activatestatus">
+                <span *ngFor="let item of personaOptions" [id]="item.active"
+                  (click)=" statusSelection(item.id, item.title)">{{item.title}}</span>
+              </div>
+            </ion-item>
+
+            <ion-item lines="none" color="primary" (click)="activateOptions=true; activatestatus=false"
+              *ngIf="persona !== 'Staff'">
+              <ion-label position="floating">Purpose</ion-label>
+              <ion-textarea type="text" formControlName="purpose"></ion-textarea>
+              <div class="purpose" *ngIf="activateOptions">
+                <span *ngFor="let item of purpose" [id]="item.active"
+                  (click)="purposeSelection(item.id, item.title)">{{item.title}}</span>
+              </div>
+            </ion-item>
+
+            <ion-item lines="none" id="login" (click)="login()" color="light" *ngIf="!isUser && formPage" >
+              <ion-label>Sign up</ion-label>
+            </ion-item>
+    
+            <ion-item lines="none" id="login" (click)="login()" color="light" *ngIf="isUser && formPage">
+              <ion-label>Sign in</ion-label>
+            </ion-item>
+    
+
+          </form>
+        
+        </div>
+
+      </ion-slide>
+
+
+
+      <ion-slide *ngIf="loggedIn">
+        <div class="main-content-3">
+          <div class="header" color="primary">
+            <span (click)="logoutpop.present()">
+              <ion-icon name="arrow-back" slot="start"></ion-icon>
+            </span>
+            <ion-text class="welcomeStar">{{clockedIn}}</ion-text>
+            <h3 class="welcomeStar">{{message}}</h3>
+          </div>
+
+          <div class="over-view">
+
+            <div class="timers">
+              <div class="timer">
+                <ion-label>You've spent</ion-label>
+                <ion-label class="time">: {{loginTime}}</ion-label>
+              </div>
+              <div class="timer">
+                <ion-label>Time in</ion-label>
+                <ion-label class="time">: {{timeIn}}</ion-label>
+              </div>
+             
+            </div>
+
+
+          </div>
+
+     <div class="bottom-area">
+            <div  id="done">
+
+            <img    src="../../assets/U-Hub logo -size L.svg">
+            <h4>Enjoy your day!</h4>
+          </div>
+
+        <div class="login-btns">
+          
+          <ion-item color="primary" lines="none" id="logout" color="light" (click)="logoutpop.present()">
+            <ion-label>Clock out</ion-label>
+
+          </ion-item>
+          <ion-item color="primary" lines="none" id="joinus" color="light" (click)="socialpop.present()">
+            <ion-label>Connect with us</ion-label>
+
+          </ion-item>
+        </div>
+     </div>
+        </div>
+     
+
+        <ion-popover [isOpen]="false" #socialpop id="ion-popover">
+          <ng-template alignment="start">
+     
+              <div class="form-element">
+                <div class="header">
+                  <img src="../../assets/U-Hub logo -size L.svg" alt="" srcset="">
+                  <ion-text>U-HuB</ion-text>
+                </div>
+                <div class="form">
+                  <ion-text>
+                    Connect with us
+                  </ion-text>
+
+                  <ion-item lines="none"  color="primary" *ngFor="let link of socialLinks" (click)=" openLink(link.link)">
+                      <img [src]="link.img">
+               <ion-label>{{link.name}}</ion-label>
+                  </ion-item>
+                
+                </div>
+              </div>
+           
+          </ng-template>
+        </ion-popover>
+
+
+        
+        <ion-popover [isOpen]="false" #logoutpop>
+          <ng-template>
+     
+              <div class="form-element clockout">
+                <div class="header">
+                  <img src="../../assets/U-Hub logo -size L.svg" alt="" srcset="">
+                  <ion-text>U-HuB</ion-text>
+                </div>
+                <div class="form">
+                  <ion-text >
+                    Really want to clock out?
+                  </ion-text>
+
+               <div id="label">
+                <ion-item lines="none"  color="primary" (click)="logoutpop.dismiss()">
+                  
+                  <ion-label>Cancel</ion-label>
+                     </ion-item>
+                     <ion-item lines="none"  color="primary" (click)="logOut(); logoutpop.dismiss()">
+                     
+                       <ion-label>Clock out</ion-label>
+                          </ion-item>
+                        
+               </div>
+                
+                </div>
+              </div>
+           
+          </ng-template>
+        </ion-popover>
+      </ion-slide>
+
+
+
+
+      <ion-slide id="qrslide">
+        <div class="main-content-2" >
+          <div class="header" color="primary">
+            <span (click)="toClockedInpage()">
+              <ion-icon name="arrow-back" slot="start"></ion-icon>
+            </span>
+            <ion-text>Scan code to clockout</ion-text>
+        
+          </div>
+          <canvas #canvas hidden></canvas>
+         <div class="video">
+          <video #video id="video"></video>
+          <ion-item lines="none" color="light" *ngIf="manualClockout">
+            <ion-label position="floating">Clockout code</ion-label>
+            <ion-input type="text" [(ngModel)]="code"></ion-input>
+          </ion-item>
+           <ion-item id="joinus" lines="none" color="primary" (click)="manualClockout = true; manualClockOut()">
+            <ion-label>
+              {{code.length == 0 ? 'Cannot scan code ?' : 'Clockout'}}
+              
+            </ion-label>
+            </ion-item>
+         </div>
+       
+       
+        </div>
+
+       
+      </ion-slide>
+      
+
+    </ion-slides>
+
+  </div>
+
+
+</ion-content>
