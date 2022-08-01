@@ -143,7 +143,7 @@ export class UserService {
       mode: 'ios',
       duration: 2000,
       position: 'top',
-      color: 'primary'
+      color: 'dark'
     });
 
     await toast.present();

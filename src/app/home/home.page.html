@@ -9,12 +9,12 @@
         <div class="main-content">
 
           <div class="logo">
-            <img src="../../assets/U-Hub logo -size L.svg" alt="">
+            <img src="../../assets/images/maxam-logo.png" alt="">
           </div>
 
           <div class="welcome-info">
             <h1>Welcome</h1>
-            <h5>to convenient clock system</h5>
+            <h5>to convenient clockin system</h5>
           </div>
 
 
@@ -96,11 +96,11 @@
               </div>
             </ion-item>
 
-            <ion-item lines="none" id="login" (click)="login()" color="light" *ngIf="!isUser && formPage" >
+            <ion-item lines="none" id="login" (click)="login()"  *ngIf="!isUser && formPage" >
               <ion-label>Sign up</ion-label>
             </ion-item>
     
-            <ion-item lines="none" id="login" (click)="login()" color="light" *ngIf="isUser && formPage">
+            <ion-item lines="none" id="login" (click)="login()"  *ngIf="isUser && formPage">
               <ion-label>Sign in</ion-label>
             </ion-item>
     
@@ -143,17 +143,17 @@
      <div class="bottom-area">
             <div  id="done">
 
-            <img    src="../../assets/U-Hub logo -size L.svg">
-            <h4>Enjoy your day!</h4>
+            <img    src="../../assets/images/maxam-logo.png">
+            <h4>Work safely, Enjoy your day!</h4>
           </div>
 
         <div class="login-btns">
           
-          <ion-item color="primary" lines="none" id="logout" color="light" (click)="logoutpop.present()">
+          <ion-item color="primary" lines="none" id="logout"  (click)="logoutpop.present()">
             <ion-label>Clock out</ion-label>
 
           </ion-item>
-          <ion-item color="primary" lines="none" id="joinus" color="light" (click)="socialpop.present()">
+          <ion-item color="primary" lines="none" id="joinus"  (click)="socialpop.present()">
             <ion-label>Connect with us</ion-label>
 
           </ion-item>
@@ -167,7 +167,7 @@
      
               <div class="form-element">
                 <div class="header">
-                  <img src="../../assets/U-Hub logo -size L.svg" alt="" srcset="">
+                  <img src="../../assets/images/maxam-logo.png" alt="" srcset="">
                   <ion-text>U-HuB</ion-text>
                 </div>
                 <div class="form">
@@ -193,8 +193,8 @@
      
               <div class="form-element clockout">
                 <div class="header">
-                  <img src="../../assets/U-Hub logo -size L.svg" alt="" srcset="">
-                  <ion-text>U-HuB</ion-text>
+                  <img src="../../assets/images/maxam-logo.png" alt="" srcset="">
+                  <!-- <ion-text>U-HuB</ion-text> -->
                 </div>
                 <div class="form">
                   <ion-text >
@@ -229,7 +229,7 @@
             <span (click)="toClockedInpage()">
               <ion-icon name="arrow-back" slot="start"></ion-icon>
             </span>
-            <ion-text>Scan code to clockout</ion-text>
+            <ion-text style="color: #4F5255;">Scan code to clockout</ion-text>
         
           </div>
           <canvas #canvas hidden></canvas>

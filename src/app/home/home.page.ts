@@ -15,6 +15,8 @@ import { ToastController, Platform, AlertController } from '@ionic/angular';
 import { Network } from '@capacitor/network';
 import { CookieService } from "ngx-cookie-service";
 
+import { interval } from 'rxjs'
+
 
 /*
 interface User {
@@ -100,6 +102,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   code: string = '';
   manualClockout = false;
+  timer2 = interval(1000)
+  timer2Sub: any;
 
   socialLinks = [
     {
@@ -143,11 +147,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       active: false
     },
 
-    {
-      title: 'Project Work',
-      id: 3,
-      active: false,
-    },
+ 
     {
       title: 'Official',
       id: 4,
@@ -177,12 +177,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   status: any = [
     {
-      title: 'Student',
+      title: 'Manager',
       id: 1,
       active: false
     },
     {
-      title: 'Lecturer',
+      title: 'Supervicer',
       id: 2,
       active: false
     },
@@ -193,7 +193,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       active: false,
     },
     {
-      title: 'Doctor',
+      title: 'Driver',
       id: 4,
       active: false
     },
@@ -217,7 +217,6 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-
 
     this.userService.userStatus().then(async user => {
       this.isUser = user == 'true' ? true : false;
@@ -247,7 +246,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngOnDestroy() {
-    Network.removeAllListeners()
+    Network.removeAllListeners();
   }
 
   ngAfterViewInit() {
@@ -256,9 +255,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.videoElement = this.video?.nativeElement;
 
 
-    window.onfocus = () => {
-      this.refreshDate();
-    }
+
+   // this.timer2Sub =  this.timer2.subscribe(timer => {
+        this.refreshDate();
+ //     })
+    
 
   }
 
@@ -269,18 +270,20 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
       if (user == 'true') {
 
+  this.timer2Sub =  this.timer2.subscribe(timer => {
+    const isCooked = this.cookie.check('timeIn')
 
-        const isCooked = this.cookie.check('timeIn')
+    if (isCooked) {
+      this.setOptions(this.cookie.get('timeIn'))
+    } else {
 
-        if (isCooked) {
-          this.setOptions(this.cookie.get('timeIn'))
-        } else {
+      this.userService.getString('timeIn').then(async time => {
+        this.setOptions(time)
+      });
 
-          this.userService.getString('timeIn').then(async time => {
-            this.setOptions(time)
-          });
-
-        }
+    }
+      });
+       
 
 
         this.loginTimer = window.setInterval(() => {
@@ -337,6 +340,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     difference -= this.hoursSpent * 3600;
     this.minsSpent = Math.floor(difference / 60);
     difference -= this.minsSpent * 60;
+
 
 
 
@@ -416,7 +420,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     const status = await Network.getStatus();
     if (this.userForm.valid) {
       if (status.connected) {
-        this.scanCode();
+        this.clockIn();
       } else {
         this.presentToast('Please turn on your data or Connect to a wifi to log in', 6000, 'wifi');
       }
@@ -426,8 +430,74 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  async startScanIn() {
+    this.scanActive = true;
+    // Not working on iOS standalone mode!
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'environment' }
+    });
 
-  scanCode() {
+    this.videoElement.srcObject = stream;
+    // Required for Safari
+    this.videoElement.setAttribute('playsinline', true);
+
+
+    this.videoElement.play();
+    requestAnimationFrame(this.scan.bind(this));
+  }
+
+
+
+  async scanIn() {
+    if (this.videoElement.readyState === this.videoElement.HAVE_ENOUGH_DATA) {
+
+
+      this.canvasElement.height = this.videoElement.videoHeight;
+      this.canvasElement.width = this.videoElement.videoWidth;
+
+      this.canvasContext.drawImage(
+        this.videoElement,
+        0,
+        0,
+        this.canvasElement.width,
+        this.canvasElement.height
+      );
+      const imageData = this.canvasContext.getImageData(
+        0,
+        0,
+        this.canvasElement.width,
+        this.canvasElement.height
+      );
+      const code = jsQR(imageData.data, imageData.width, imageData.height, {
+        inversionAttempts: 'dontInvert'
+      });
+
+      if (code) {
+        this.scanActive = false;
+        this.scanResult = code.data;
+
+        if (this.scanResult == environment.qrKey) {
+          this.clockIn();
+          this.reset();
+          this.stopScan();
+        }
+        this.reset();
+        this.stopScan();
+      } else {
+        if (this.scanActive) {
+          requestAnimationFrame(this.scan.bind(this));
+        }
+      }
+    } else {
+      requestAnimationFrame(this.scan.bind(this));
+    }
+  }
+
+
+
+
+
+  clockIn() {
     this.formPage = false
     this.loggedIn = true;
     this.scanCodes = false;
@@ -455,6 +525,10 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     } else {
       this.presentToast('Please turn on your data or Connect to a wifi to log out', 6000, 'wifi');
     }
+
+    if(this.timer2Sub){
+      this.timer2Sub.unsubscribe();
+    }
   }
 
 
@@ -471,84 +545,9 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
 
   }
-  toScanSlide() {
+ 
 
-  }
-
-  toLogOutSlide() {
-
-  }
-
-
-  toClockedInpage() {
-
-
-    this.segmentChange(1);
-    this.loginTimer = window.setInterval(() => {
-
-      this.loggedIn = true;
-      this.formPage = false
-      this.segmentChange(1);
-
-    }, 100)
-  }
-
-
-  toHomeSlide() {
-    this.formPage = false;
-
-    this.segmentChange(0);
-  }
-
-
-  slideChanged(slides) {
-    slides.getActiveIndex().then((selectedIndex) => {
-      this.segment = selectedIndex;
-      this.selectedSlide = slides;
-      if (selectedIndex !== 1) {
-        this.formPage = false;
-      }
-    });
-  }
-
-  async segmentChange(slide: number) {
-    await this.selectedSlide.slideTo(slide);
-
-  }
-
-  async presentToast(msg: string, dur, ic) {
-    const toast = await this.toastCtrl.create({
-      message: msg,
-      mode: 'ios',
-      duration: dur,
-      position: 'top',
-      color: 'primary',
-
-    });
-
-    await toast.present();
-  }
-
-
-
-
-
-  openLink(externalUrl: string) {
-    window.open(externalUrl, '_external')
-  }
-
-
-
-
-  reset() {
-    this.scanResult = null;
-  }
-
-  stopScan() {
-    this.scanActive = false;
-  }
-
-
+///Scan Out Logic
 
   async startScan() {
     this.scanActive = true;
@@ -565,6 +564,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
     this.videoElement.play();
     requestAnimationFrame(this.scan.bind(this));
   }
+
+
 
   async scan() {
     if (this.videoElement.readyState === this.videoElement.HAVE_ENOUGH_DATA) {
@@ -622,6 +623,8 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
+  //Use a code to scan out
+
   manualClockOut() {
     if (this.code.length > 0 && this.code == environment.qrcode) {
       this.scanActive = false;
@@ -643,5 +646,88 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       this.stopScan();
     }
   }
+
+
+  reset() {
+    this.scanResult = null;
+  }
+
+  stopScan() {
+    this.scanActive = false;
+  }
+
+
+
+
+
+
+
+  toScanSlide() {
+
+  }
+
+  toLogOutSlide() {
+
+  }
+
+
+  toClockedInpage() {
+
+
+    this.segmentChange(1);
+    this.loginTimer = window.setInterval(() => {
+
+      this.loggedIn = true;
+      this.formPage = false
+      this.segmentChange(1);
+
+    }, 100)
+  }
+
+
+  toHomeSlide() {
+    this.formPage = false;
+
+    this.segmentChange(0);
+  }
+
+
+  slideChanged(slides) {
+    slides.getActiveIndex().then((selectedIndex) => {
+      this.segment = selectedIndex;
+      this.selectedSlide = slides;
+      if (selectedIndex !== 1) {
+        this.formPage = false;
+      }
+    });
+  }
+
+  async segmentChange(slide: number) {
+    await this.selectedSlide?.slideTo(slide);
+
+  }
+
+  async presentToast(msg: string, dur, ic) {
+    const toast = await this.toastCtrl.create({
+      message: msg,
+      mode: 'ios',
+      duration: dur,
+      position: 'top',
+      color: 'dark',
+
+    });
+
+    await toast.present();
+  }
+
+
+
+
+
+  openLink(externalUrl: string) {
+    window.open(externalUrl, '_external')
+  }
+
+
 
 }
