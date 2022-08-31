@@ -147,7 +147,11 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       active: false
     },
 
- 
+    {
+      title: 'Project Work',
+      id: 3,
+      active: false,
+    },
     {
       title: 'Official',
       id: 4,
@@ -177,12 +181,12 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
 
   status: any = [
     {
-      title: 'Manager',
+      title: 'Student',
       id: 1,
       active: false
     },
     {
-      title: 'Supervicer',
+      title: 'Lecturer',
       id: 2,
       active: false
     },
@@ -193,7 +197,7 @@ export class HomePage implements OnInit, AfterViewInit, OnDestroy {
       active: false,
     },
     {
-      title: 'Driver',
+      title: 'Doctor',
       id: 4,
       active: false
     },

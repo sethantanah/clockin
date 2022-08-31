@@ -7,7 +7,7 @@
   margin-bottom: 30px;
 
   span {
-    background-color: #d37577;
+    background-color: #ebfef2;
     width: 30px;
     height: 40px;
     padding: 2px 5px;
@@ -18,7 +18,7 @@
     ion-icon {
       margin: auto auto;
       font-size: 20px;
-      color: #fff;
+      color: #037b2f;
     }
   }
   ion-text {
@@ -72,7 +72,7 @@ font-family: 'Roboto', sans-serif !important;
     .logo {
       margin-left: auto;
       margin-right: auto;
-      width: 180px;
+      width: 90px;
 
       margin-top: 35%;
 
@@ -92,7 +92,7 @@ font-family: 'Roboto', sans-serif !important;
       h5 {
         margin-top: -0.5px;
         font-weight: normal;
-        color: #4F5255;
+        color: #c1c2c2;
       }
     }
     .continue-as {
@@ -127,11 +127,11 @@ font-family: 'Roboto', sans-serif !important;
         height: 50px;
         width: 100%;
         gap: 10px;
-        color: #4F5255;
+        color: #037b2f;
         background-color: #fff;
-        box-shadow: 0px 0px 4px 1px rgb(211, 117, 119);
-        -webkit-box-shadow: 0px 0px 4px 1px rgb(211, 117, 119);
-        -moz-box-shadow: 0px 0px 4px 1px rgb(211, 117, 119);
+        box-shadow: 0px 0px 4px 1px rgba(3,123,47,0.4);
+        -webkit-box-shadow: 0px 0px 4px 1px rgba(3,123,47,0.4);
+        -moz-box-shadow: 0px 0px 4px 1px rgba(3,123,47,0.4);
         border-radius: 10px;
         ion-text {
           margin-left: 5px;
@@ -174,16 +174,16 @@ margin-bottom: 0;
     ion-item {
       margin-top: 20px;
       border-radius: 10px;
-      background-color: #d37577;
+      background-color: #ebfef2;
       ion-label {
-        color: #fff;
+        color: #037b2f;
         font-weight: 400;
         font-size: 15px;
         z-index: 8888888888888;
       }
       ion-input,
       ion-textarea {
-        color: #fff;
+        color: #211f20;
       }
     }
 
@@ -224,15 +224,10 @@ margin-right: auto;
   gap: 10px;
   color: #037b2f;
   background-color: #fff;
-   box-shadow: 0px 0px 4px 1px rgb(211, 117, 119);
-        -webkit-box-shadow: 0px 0px 4px 1px rgb(211, 117, 119);
-        -moz-box-shadow: 0px 0px 4px 1px rgb(211, 117, 119);
+  box-shadow: 0px 0px 4px 1px rgba(3,123,47,0.4);
+  -webkit-box-shadow: 0px 0px 4px 1px rgba(3,123,47,0.4);
+  -moz-box-shadow: 0px 0px 4px 1px rgba(3,123,47,0.4);
   border-radius: 10px;
-  ion-label{
-    color:#4F5255;
-   // font-weight: 500;
-    font-size: 18px;
-  }
   ion-text {
     margin-left: 5px;
     font-weight: 400;
@@ -278,12 +273,12 @@ min-height: 100%;
       text-align: center;
     border-radius: 10px;
       background-color: #fff;
-      box-shadow: 0px 0px 4px 1px rgb(211, 117, 119);
-      -webkit-box-shadow: 0px 0px 4px 1px rgb(211, 117, 119);
-      -moz-box-shadow: 0px 0px 4px 1px rgb(211, 117, 119);
+      box-shadow: 0px 0px 4px 1px rgba(3,123,47,0.4);
+      -webkit-box-shadow: 0px 0px 4px 1px rgba(3,123,47,0.4);
+      -moz-box-shadow: 0px 0px 4px 1px rgba(3,123,47,0.4);
       ion-label {
         font-weight: 500;
-        color: #fff;
+        color: #037b2f;
       }
   }
 
@@ -312,8 +307,8 @@ gap: 10px;
       .time{
         font-size: 14px;
         
-        font-weight: 500;
-    color: #4F5255;
+        font-weight: 400;
+    color: #037b2f;
       }
     }
   }
@@ -352,7 +347,6 @@ h4{
   margin-left: auto;
   margin-right: auto;
   margin-top: 0;
-  color: #4F5255;
 
 }
 }
@@ -365,7 +359,7 @@ h4{
     display: flex;
     flex-direction: row;
     img{
-      width: 90px;
+      width: 50px;
       height: 50px;
       border-radius: 10px;
     }
@@ -375,23 +369,19 @@ h4{
       margin-top: auto;
       margin-bottom: auto;
       margin-left: 20px;
-      color: #4F5255;
-      display: none;
     }
   }
   .form{
     padding: 1em;
-    margin-top: -20px;
     ion-text{
       font-size: 16px;
       font-weight: bold;
-      color: #fff;
+      color: #211f20;
     }
     ion-item{
       border-radius: 10px;
       background-color: #ebfef2;
       margin-top: 10px;
-      color:#4F5255;
       img{
         height: 30px;
         width: 30px;
@@ -401,7 +391,7 @@ h4{
         font-size: 15px;
         margin-left: 10px;
         font-weight: bold;
-        color: #fff;
+        color: #211f20;
       }
     }
   }
@@ -409,7 +399,6 @@ h4{
 
 .clockout{
   .form{
-    margin-top: -30px;
     text-align: center;
     #label{
       margin-top: 60px;
@@ -436,7 +425,7 @@ h4{
   width: 100%;
 
   border-radius: 20px;
-  background-color: rgb(221, 144, 145);
+  background-color: #ebfef2;
   padding: 1em;
   ion-item{
     border-radius: 10%;
@@ -450,12 +439,12 @@ h4{
       text-align: center !important;
     border-radius: 10px;
       background-color: #fff;
-      box-shadow: 0px 0px 4px 1px rgb(211, 117, 119);
-      -webkit-box-shadow: 0px 0px 4px 1px rgb(211, 117, 119);
-      -moz-box-shadow: 0px 0px 4px 1px rgb(211, 117, 119);
+      box-shadow: 0px 0px 4px 1px rgba(3,123,47,0.4);
+      -webkit-box-shadow: 0px 0px 4px 1px rgba(3,123,47,0.4);
+      -moz-box-shadow: 0px 0px 4px 1px rgba(3,123,47,0.4);
       ion-label {
         font-weight: 500;
-        color: #fff;
+        color: #037b2f;
         text-align: center !important;
       }
   }
